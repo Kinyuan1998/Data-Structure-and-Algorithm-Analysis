@@ -4,7 +4,7 @@
 #include <stdlib.h> 
 using namespace std;
 
-class DblNode {		//结点类 
+class DblNode {
 	string str;
 	DblNode *back;
 	DblNode *next;
@@ -15,7 +15,7 @@ public:
 	DblNode(string s, DblNode *linkback = NULL, DblNode *linknext = NULL):str(s), back(linkback), next(linknext) {}
 };
 
-class DblLinkList {		//链表类 
+class DblLinkList {
 	DblNode *head, *current;
 	
 public:
