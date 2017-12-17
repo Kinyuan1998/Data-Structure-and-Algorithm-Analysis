@@ -5,17 +5,17 @@
 using namespace std;
 
 typedef struct HuffmanTree {
-	//¹ş·òÂüÊ÷½á¹¹Ìå 
-    char ch;
-    int frq;
-    string code;
-    HuffmanTree *left, *right;
-    Tree() {
-    	ch = '\0';
-    	code = "";
-    	frq = 0;
-    	left = right = NULL;
-	}
+//å“ˆå¤«æ›¼æ ‘ç»“æ„ä½“ 
+	char ch;
+	int frq;
+	string code;
+	HuffmanTree *left, *right;
+	Tree() {
+		ch = '\0';
+		code = "";
+		frq = 0;
+		left = right = NULL;
+		}
 }Tree, *PTree;
 
 struct cmp {
@@ -24,10 +24,10 @@ struct cmp {
     }
 };
 
-//ÒëÂë 
+//è¯‘ç  
 void Encode(PTree current, ofstream &out) {
 	if (current->ch != '\0')
-		out << current->ch << "£º" << current->code << endl;
+		out << current->ch << "ï¼š" << current->code << endl;
 	else {
 		current->left->code = current->code + "0";
         current->right->code = current->code + "1";
@@ -36,7 +36,7 @@ void Encode(PTree current, ofstream &out) {
 	}
 }
 
-//½âÂë
+//è§£ç 
 void Decode(PTree root, string s, ofstream &out) {
 	PTree current = root;
 	for (int i = 0; i < s.length(); i++) {
@@ -55,7 +55,7 @@ int main (void) {
 	ofstream out;
 	string inFile, outFile, str1, str2;
 	
-	//ÊäÈëÎÄ¼şÃû²¢´ò¿ª 
+	//è¾“å…¥æ–‡ä»¶åå¹¶æ‰“å¼€ 
 	cout << "Please input the inputfile name(Encode):";
 	cin >> inFile;
 	in.open (inFile.c_str());
@@ -73,10 +73,10 @@ int main (void) {
 	cin >> outFile;
 	out.open (outFile.c_str());
 
-	//´´½¨ TreeµÄÓÅÏÈ¶ÓÁĞ
+	//åˆ›å»º Treeçš„ä¼˜å…ˆé˜Ÿåˆ—
     priority_queue<PTree, vector<PTree>, cmp> q;
     
-	//Í³¼Æ×ÖÆµ 	
+	//ç»Ÿè®¡å­—é¢‘ 	
 	for (int i = 65; i <= 90; i++) {
 		int count = 0;
 		for (int j = 0; j < str1.length(); j++)
@@ -90,7 +90,7 @@ int main (void) {
 		}
 	}
 	
-	//Íê³É¶ÓÁĞ¹¹½¨
+	//å®Œæˆé˜Ÿåˆ—æ„å»º
 	while (q.size() != 1) {
 		PTree node = new Tree;
 		PTree nodel, noder;
@@ -105,15 +105,15 @@ int main (void) {
 	    q.push(node);
 	}
 	
-	//¹ş·òÂüÊ÷¹¹½¨Íê±Ï 
+	//å“ˆå¤«æ›¼æ ‘æ„å»ºå®Œæ¯• 
 	PTree root = q.top();
 	
-	//Ç°Ğò±éÀú¹ş·òÂüÊ÷µÄÒ¶×Ó½Úµã 
+	//å‰åºéå†å“ˆå¤«æ›¼æ ‘çš„å¶å­èŠ‚ç‚¹ 
 	Encode(root, out);
 	out.clear();
 	out.close();
 	
-	//ÊäÈëÎÄ¼şÃû²¢´ò¿ª 
+	//è¾“å…¥æ–‡ä»¶åå¹¶æ‰“å¼€ 
 	cout << "Please input the inputfile name(Decode):";
 	cin >> inFile;
 	in.open (inFile.c_str());
