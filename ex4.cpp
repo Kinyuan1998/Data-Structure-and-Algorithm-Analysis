@@ -14,22 +14,22 @@ struct Course {
 	}
 };
 
-//±ß±í½Úµã½á¹¹£¬adjvex´æ´¢ÁÚ½ÓµãµÄÎ»ÖÃ£¬nextÖ¸ÕëÖ¸ÏòÏÂÒ»¸ö½Úµã
+//è¾¹è¡¨èŠ‚ç‚¹ç»“æ„ï¼Œadjvexå­˜å‚¨é‚»æ¥ç‚¹çš„ä½ç½®ï¼ŒnextæŒ‡é’ˆæŒ‡å‘ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
 typedef struct EdgeNode {
-    int adjvex;
-    struct EdgeNode *next;
+	int adjvex;
+	struct EdgeNode *next;
 }EdgeNode;
  
-//¶¥µã±í½Úµã½á¹¹£¬data´æ´¢Êı¾İ£¬firstedgeÖ¸Ïò±ß±íµÄµÚÒ»¸ö½Úµã
+//é¡¶ç‚¹è¡¨èŠ‚ç‚¹ç»“æ„ï¼Œdataå­˜å‚¨æ•°æ®ï¼ŒfirstedgeæŒ‡å‘è¾¹è¡¨çš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹
 typedef struct {
-    Course data;
-    EdgeNode *firstedge;
+	Course data;
+	EdgeNode *firstedge;
 }AdjList;
 
-//numVertex, numEdgeÊÇÍ¼µÄ¶¥µãÊıºÍ±ßÊı
+//numVertex, numEdgeæ˜¯å›¾çš„é¡¶ç‚¹æ•°å’Œè¾¹æ•°
 typedef struct {
-    AdjList adjList[38];
-    int numVertex, numEdge;
+	AdjList adjList[38];
+	int numVertex, numEdge;
 }GraphAdjList;
 
 void CreateGraph(GraphAdjList &G, Course cr[]) {
@@ -67,62 +67,61 @@ void CreateGraph(GraphAdjList &G, Course cr[]) {
 }
 
 void Toposort(GraphAdjList gl) {
-	//¶¨Òå´æ´¢Í¼ÖĞÃ¿¸ö¶¥µãÈë¶ÈµÄÒ»Î¬ÕûĞÍÊı×éd
-    int *d = new int[38];
-	//³õÊ¼»¯Êı×édÖĞµÄÃ¿¸öÔªËØÖµÎª0
-    for(int i = 0; i < gl.numVertex; i++) d[i] = 0;
-	//ÀûÓÃÊı×édÖĞµÄ¶ÔÓ¦ÔªËØÍ³¼Æ³öÃ¿¸ö¶¥µãµÄÈë¶È
-    for (int i = 0; i < gl.numVertex; i++) {
-    	for (int j = 0; j < gl.numVertex; j++) {
-	    	EdgeNode *e = gl.adjList[j].firstedge;
-	        while(e) {
-	            if (i == e->adjvex) d[i]++;
-	            e = e->next;
-	        }
+	//å®šä¹‰å­˜å‚¨å›¾ä¸­æ¯ä¸ªé¡¶ç‚¹å…¥åº¦çš„ä¸€ç»´æ•´å‹æ•°ç»„d
+	int *d = new int[38];
+	//åˆå§‹åŒ–æ•°ç»„dä¸­çš„æ¯ä¸ªå…ƒç´ å€¼ä¸º0
+	for(int i = 0; i < gl.numVertex; i++) d[i] = 0;
+	//åˆ©ç”¨æ•°ç»„dä¸­çš„å¯¹åº”å…ƒç´ ç»Ÿè®¡å‡ºæ¯ä¸ªé¡¶ç‚¹çš„å…¥åº¦
+	for (int i = 0; i < gl.numVertex; i++) {
+    		for (int j = 0; j < gl.numVertex; j++) {
+	    		EdgeNode *e = gl.adjList[j].firstedge;
+	        	while(e) {
+	           	 if (i == e->adjvex) d[i]++;
+	            	e = e->next;
+	       		}
 		}
-		//cout << d[i] << " " << gl.adjList[i].data.semester << endl; 
     }
     
-    //ÉèÖÃÑ§ÆÚ 
-    for (int i = 1; i <= 8; i++) {
-    	vector<int> count;
-    	int limit; 
-    	for(int j = 0; j < gl.numVertex; j++) {
+    //è®¾ç½®å­¦æœŸ 
+	for (int i = 1; i <= 8; i++) {
+    		vector<int> count;
+    		int limit; 
+    		for(int j = 0; j < gl.numVertex; j++) {
 			if ((d[j] == 0) && (gl.adjList[j].data.semester == 0)) count.push_back(j);
 		}
 		
 		switch(i) {
 			case 1:
 				limit = 4;
-				cout << "µÚÒ»Ñ§ÆÚ£º ";
+				cout << "ç¬¬ä¸€å­¦æœŸï¼š ";
 				break;
 			case 2:
 				limit = 6;
-				cout << "µÚ¶şÑ§ÆÚ£º ";
+				cout << "ç¬¬äºŒå­¦æœŸï¼š ";
 				break;
 			case 3:
 				limit = 2;
-				cout << "µÚÈıÑ§ÆÚ£º ";
+				cout << "ç¬¬ä¸‰å­¦æœŸï¼š ";
 				break;
 			case 4:
 				limit = 6;
-				cout << "µÚËÄÑ§ÆÚ£º ";
+				cout << "ç¬¬å››å­¦æœŸï¼š ";
 				break;
 			case 5:
 				limit = 4;
-				cout << "µÚÎåÑ§ÆÚ£º ";
+				cout << "ç¬¬äº”å­¦æœŸï¼š ";
 				break;
 			case 6:
 				limit = 4;
-				cout << "µÚÁùÑ§ÆÚ£º ";
+				cout << "ç¬¬å…­å­¦æœŸï¼š ";
 				break;
 			case 7:
 				limit = 4;
-				cout << "µÚÆßÑ§ÆÚ£º ";
+				cout << "ç¬¬ä¸ƒå­¦æœŸï¼š ";
 				break;
 			case 8:
 				limit = 0;
-				cout << "µÚ°ËÑ§ÆÚ£º ";
+				cout << "ç¬¬å…«å­¦æœŸï¼š ";
 				break;
 		}
 		
@@ -150,7 +149,7 @@ int main(void) {
 	GraphAdjList gr;
 	in.open ("course_inf.txt");
 	
-	//ĞÅÏ¢·Ö¿é 
+	//ä¿¡æ¯åˆ†å— 
 	for (int j = 0; j < 38; j++) {
 		getline(in, str);
 		string s;
@@ -161,14 +160,14 @@ int main(void) {
         	stringstream ss(res[i]);
         	switch(i) {
         		case 0:
-					ss >> cr[j].number;
-					break;
+				ss >> cr[j].number;
+				break;
         		case 1:
-					ss >> cr[j].name;
-					break;
+				ss >> cr[j].name;
+				break;
         		case 2:
-					ss >> cr[j].period;
-					break;
+				ss >> cr[j].period;
+				break;
         		case 3:
         			ss >> cr[j].semester;
         			break;
