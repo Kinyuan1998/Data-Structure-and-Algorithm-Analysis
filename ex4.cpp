@@ -104,7 +104,7 @@ void Toposort(GraphAdjList gl) {
 				cout << "第三学期： ";
 				break;
 			case 4:
-				limit = 6;
+				limit = 5;
 				cout << "第四学期： ";
 				break;
 			case 5:
